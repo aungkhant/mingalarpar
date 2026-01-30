@@ -1,7 +1,7 @@
 {
   "name": "Mingalar",
   "short_name": "Mingalar",
-  "display": "standlone",
+  "display": "standalone",
   "start_url": "/",
   "icons": [
     {
