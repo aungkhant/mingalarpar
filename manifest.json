@@ -2,7 +2,8 @@
   "name": "Mingalar",
   "short_name": "Mingalar",
   "display": "standalone",
-  "start_url": "/",
+  "start_url": "/mingalarpar/",
+  "scope": "/mingalarpar/",
   "icons": [
     {
       "src": "/img/favicon_02.png",
