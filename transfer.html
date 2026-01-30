@@ -240,7 +240,7 @@
       </div>
     </main>
 
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content position-relative p-4">
 
@@ -272,7 +272,7 @@
 
               <div class="row justify-content-between">
                 <div class="col-6">
-                  Service Charges
+                  Total Service Charges
                 </div>
                 <div class="col-6">
                   <p class="text-end mb-0"><span id="service-amount-text"></span> MMK</p>
@@ -401,7 +401,9 @@
               };
 
               var serviceCharge = Number(userData.amount) * (serviceRate / 100);
-              var totalAmount = Number(userData.amount) + serviceCharge;
+              var VAT = serviceCharge * (defaultVAT / 100);
+              var totalCharge = serviceCharge + VAT;
+              var totalAmount = Number(userData.amount) + totalCharge;
               totalBaht = Math.ceil(totalAmount / exchangeRate);
 
               $('#name-text').text(userData.name);
@@ -409,7 +411,7 @@
               $('#note-text').text(userData.note);
 
               $('#amount-text-2').text(Number(userData.amount).toLocaleString('en-US'));
-              $('#service-amount-text').text(serviceCharge.toLocaleString('en-US'));
+              $('#service-amount-text').text(totalCharge.toLocaleString('en-US'));
               $('#total-amount-text').text(totalAmount.toLocaleString('en-US'));
               $('#total-baht-text').text(totalBaht.toLocaleString('en-US'));
 

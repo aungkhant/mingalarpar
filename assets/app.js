@@ -1,6 +1,7 @@
 var exchangeRate = 129;
 var defaultBalance = 10000;
-var serviceRate = 1.5;
+var serviceRate = 2;
+var defaultVAT = 7;
 
 var defaultHistory = [
   {
