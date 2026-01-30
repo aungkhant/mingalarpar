@@ -2,8 +2,8 @@
   "name": "Mingalar",
   "short_name": "Mingalar",
   "display": "standalone",
-  "start_url": "/repo-name/",
-  "scope": "/repo-name/",
+  "start_url": "/mingalarpar/",
+  "scope": "/mingalarpar/",
   "icons": [
     {
       "src": "/img/favicon_02.png",
