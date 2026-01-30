@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mingalarpar</title>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <style type="text/css">
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      main {
+        flex: 1;
+        overflow: scroll;
+        background: #E8F5E9;
+        padding: 20px 0;
+      }
+      header {
+        background: #388E3C;
+      }
+      .heading {
+        padding: 20px 0;
+        color: #fff;
+      }
+      .pocket {
+        margin: 30px 0 50px;
+        color: #fff;
+      }
+      .pocket .h1 {
+        font-weight: 700;
+      }
+      .body {
+        
+      }
+      .action-box {
+        padding: 10px;
+        border-radius: 16px;
+        background: #fff;
+        margin-bottom: 30px;
+      }
+      .action-box .box {
+        display: inline-block;
+        text-align: center;
+      }
+      .action-box .box span {
+        font-size: 14px;
+        font-weight: 500;
+        display: block;
+      }
+      .action-box .box svg {
+        color: #fff;
+      }
+      .content {
+        position: relative;
+        top: -55px;
+      }
+      .content h3 {
+        font-weight: 600;
+      }
+      .exchange {
+        background: #fff;
+        border-radius: 8px;
+        padding: 30px;
+      }
+      .exchange p {
+        font-weight: 500;
+      }
+      .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        padding: 5px;
+      }
+      .icon-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        padding: 12px;
+        background: #303F9F;
+      }
+      footer {
+        padding: 5px;
+      }
+      footer .box {
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+      }
+      footer .box span {
+        font-size: 12px;
+        font-weight: 500;
+        display: block;
+        color: #666;
+      }
+      footer .box svg {
+        color: #666;
+      }
+      footer .box span.active {
+        color: #303F9F;
+      }
+      footer .box svg.active {
+        color: #303F9F;
+      }
+      .icon-footer {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        padding: 15px;
+        background: #2E7D32;
+        position: relative;
+        bottom: 25px;
+      }
+      .icon-footer svg {
+        color: #fff !important;
+      }
+      .btn {
+        margin-top: 20px;
+        border-radius: 24px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .btn-primary {
+        background: #2E7D32 !important;
+        border: 1px solid #2E7D32 !important;
+      }
+      .modal-content {
+        background: #ddd;
+        border: none;
+      }
+      .form-control:focus, .form-select:focus {
+        border-color: #2E7D32;
+        box-shadow: none;
+      }
+      .info-text {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="heading">
+          <div class="row justify-content-between">
+            <div class="col-6">
+              <h1 class="h2 mb-0">
+                Remittance
+              </h1>
+            </div>
+
+            <div class="col-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="body">
+        <div class="container">
+          <p><b>Please fill receiver information.</b></p>
+
+          <form id="transfer-form">
+
+            <div class="mb-3">
+              <label class="form-label">Receiver's Name <span class="text text-danger">*</span></label>
+              <input type="text" class="form-control" required id="name">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Receiver's Phone Number <span class="text text-danger">*</span></label>
+              <input type="text" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Receiver's NRC Number <span class="text text-danger">*</span></label>
+              <input type="text" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Transfer Amount <span class="text text-danger">*</span></label>
+
+              <div class="d-flex align-items-center">
+                <input type="number" required id="amount"
+                       class="form-control me-3"
+                       style="max-width: 250px;">
+
+                <div class="form-check form-check-inline mb-0">
+                  <input class="form-check-input" type="radio" name="currency" id="mmk2" checked>
+                  <label class="form-check-label" for="mmk2">MMK</label>
+                </div>
+
+                <!-- <div class="form-check form-check-inline mb-0">
+                  <input class="form-check-input" type="radio" name="currency" id="thb2">
+                  <label class="form-check-label" for="thb2">THB</label>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Purpose of Remittance <span class="text text-danger">*</span></label>
+              <input type="text" class="form-control" required id="note"> 
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Receiving Method <span class="text text-danger">*</span></label>
+
+              <select class="form-select">
+                <option>KBZ Pay</option>
+                <option>KBZ Bank Account</option>
+                <option>OTC</option>
+              </select>
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-primary mb-4" type="submit">Transfer</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content position-relative p-4">
+
+          <!-- Close button -->
+          <button type="button"
+                  class="btn-close position-absolute top-0 end-0 m-3"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+
+          <!-- Info text -->
+          <div class="modal-body p-0">
+            <div class="text-center">
+              <p>Transfer to <span id="name-text"></span></p>
+
+              <p class="h3 mb-3"><span id="amount-text"></span> MMK</p>
+
+              <p class="small">Note: <span id="note-text"></span></p>
+            </div>
+
+            <div class="bg-white p-2 mb-1">
+              <div class="row justify-content-between">
+                <div class="col-6">
+                  Original Amount
+                </div>
+                <div class="col-6">
+                  <p class="text-end"><span id="amount-text-2"></span> MMK</p>
+                </div>
+              </div>
+
+              <div class="row justify-content-between">
+                <div class="col-6">
+                  Services Charges
+                </div>
+                <div class="col-6">
+                  <p class="text-end mb-0"><span id="service-amount-text"></span> MMK</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-2">
+            <div class="row justify-content-between">
+              <div class="col-6">
+                Total Amount
+              </div>
+              <div class="col-6">
+                <p class="text-end"><span id="total-amount-text"></span> MMK</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="info-text">(A total of <b><span id="total-baht-text"></span> baht</b> will be deducted from your account according to exchange rate.)</p>
+
+          <div class="d-grid">
+            <button class="btn btn-primary mb-4" id="btn-confirm">Confirm Payment</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+
+            <div class="col d-flex justify-content-center">
+              <a class="box" href="home.html">
+                <div class="">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                  </svg>
+                </div>
+
+                <span>Home</span>
+              </a>
+            </div>
+
+            <div class="col d-flex justify-content-center">
+              <a class="box" href="history.html">
+                <div class="">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stickies" viewBox="0 0 16 16">
+                    <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1z"/>
+                    <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2zM3 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V9h-4.5A1.5 1.5 0 0 0 9 10.5V15H3.5a.5.5 0 0 1-.5-.5zm7 11.293V10.5a.5.5 0 0 1 .5-.5h4.293z"/>
+                  </svg>
+                </div>
+
+                <span>Activity</span>
+              </a>
+            </div>
+
+            <div class="col d-flex justify-content-center">
+              <span class="box">
+                <div class="icon-footer">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-qr-code-scan" viewBox="0 0 16 16">
+                    <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5M.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5M4 4h1v1H4z"/>
+                    <path d="M7 2H2v5h5zM3 3h3v3H3zm2 8H4v1h1z"/>
+                    <path d="M7 9H2v5h5zm-4 1h3v3H3zm8-6h1v1h-1z"/>
+                    <path d="M9 2h5v5H9zm1 1v3h3V3zM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8zm2 2H9V9h1zm4 2h-1v1h-2v1h3zm-4 2v-1H8v1z"/>
+                    <path d="M12 9h2V8h-2z"/>
+                  </svg>
+                </div>
+
+                <!-- <span>Scan</span> -->
+              </span>
+            </div>
+
+            <div class="col d-flex justify-content-center">
+              <span class="box">
+                <div class="">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">
+                    <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/>
+                    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+                  </svg>
+                </div>
+
+                <span>Environment</span>
+              </span>
+            </div>
+
+            <div class="col d-flex justify-content-center">
+              <span class="box">
+                <div class="">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                  </svg>
+                </div>
+
+                <span>Profile</span>
+              </span>
+            </div>
+
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="assets/app.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+          // when transfer button clicks
+          var confirmModal = new bootstrap.Modal(
+            document.getElementById('confirmModal')
+          );
+          var totalBaht;
+          var userData;
+
+          $('#transfer-form').submit(function(e){
+              e.preventDefault();
+              
+              userData = {
+                name: $('#name').val(),
+                amount: $('#amount').val(),
+                note: $('#note').val(),
+                createdAt: new Date().toISOString()
+              };
+
+              var serviceCharge = Number(userData.amount) * (serviceRate / 100);
+              var totalAmount = Number(userData.amount) + serviceCharge;
+              totalBaht = Math.ceil(totalAmount / exchangeRate);
+
+              $('#name-text').text(userData.name);
+              $('#amount-text').text(Number(userData.amount).toLocaleString('en-US'));
+              $('#note-text').text(userData.note);
+
+              $('#amount-text-2').text(Number(userData.amount).toLocaleString('en-US'));
+              $('#service-amount-text').text(serviceCharge.toLocaleString('en-US'));
+              $('#total-amount-text').text(totalAmount.toLocaleString('en-US'));
+              $('#total-baht-text').text(totalBaht.toLocaleString('en-US'));
+
+              confirmModal.show();
+          })
+
+          $('#btn-confirm').click(function(){
+            // deduct from main balance
+            var mainBalance = localStorage.getItem('mainBalance');
+            var newBalance = mainBalance - totalBaht;
+            localStorage.setItem('mainBalance', newBalance);
+
+            // save into history
+            var history = JSON.parse(localStorage.getItem('history')) || [];
+            history.push(userData);
+            localStorage.setItem('history', JSON.stringify(history));
+
+            window.location.href = 'home.html';
+          });
+      });
+    </script>
+  </body>
+</html>
