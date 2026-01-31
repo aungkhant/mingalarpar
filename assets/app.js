@@ -1,5 +1,5 @@
 var exchangeRate = 129;
-var defaultBalance = 10000;
+var defaultBalance = 50000;
 var serviceRate = 2;
 var defaultVAT = 7;
 
