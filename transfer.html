@@ -185,12 +185,12 @@
 
             <div class="mb-3">
               <label class="form-label">Receiver's Name <span class="text text-danger">*</span></label>
-              <input type="text" class="form-control" required id="name">
+              <input type="text" class="form-control" required id="name" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '')">
             </div>
 
             <div class="mb-3">
               <label class="form-label">Receiver's Phone Number <span class="text text-danger">*</span></label>
-              <input type="text" class="form-control" required>
+              <input type="text" class="form-control" required oninput="this.value = this.value.replace(/[^0-9 ]/g, '')">
             </div>
 
             <div class="mb-3">
@@ -202,19 +202,12 @@
               <label class="form-label">Transfer Amount <span class="text text-danger">*</span></label>
 
               <div class="d-flex align-items-center">
-                <input type="number" required id="amount"
-                       class="form-control me-3"
-                       style="max-width: 250px;">
+                <input type="number" required id="amount" class="form-control me-3">
 
                 <div class="form-check form-check-inline mb-0">
                   <input class="form-check-input" type="radio" name="currency" id="mmk2" checked>
                   <label class="form-check-label" for="mmk2">MMK</label>
                 </div>
-
-                <!-- <div class="form-check form-check-inline mb-0">
-                  <input class="form-check-input" type="radio" name="currency" id="thb2">
-                  <label class="form-check-label" for="thb2">THB</label>
-                </div> -->
               </div>
             </div>
 
