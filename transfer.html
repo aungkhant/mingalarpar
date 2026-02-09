@@ -9,6 +9,7 @@
     <link rel="manifest" href="manifest.json">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" type="image/x-icon" href="img/favicon_02.png">
     <link rel="apple-touch-icon" href="img/favicon_02.png">
 
@@ -25,7 +26,7 @@
       }
       main {
         flex: 1;
-        overflow: scroll;
+        overflow-y: scroll;
         background: #FFFDE7;
         padding: 20px 0;
       }
@@ -190,12 +191,17 @@
 
             <div class="mb-3">
               <label class="form-label">Receiver's Phone Number <span class="text text-danger">*</span></label>
-              <input type="text" class="form-control" required oninput="this.value = this.value.replace(/[^0-9 ]/g, '')">
+              <input type="text" class="form-control" required id="phone" oninput="this.value = this.value.replace(/[^0-9 ]/g, '')">
             </div>
 
             <div class="mb-3">
               <label class="form-label">Receiver's NRC Number <span class="text text-danger">*</span></label>
-              <input type="text" class="form-control" required>
+              <input type="text" class="form-control" required id="nrc">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Receiver's Address <span class="text text-danger">*</span></label>
+              <input type="text" class="form-control" required id="address">
             </div>
 
             <div class="mb-3">
@@ -258,7 +264,7 @@
             <div class="bg-white p-2 mb-1">
               <div class="row justify-content-between">
                 <div class="col-6">
-                  Transfer Amount
+                  Transfer Amount (MMK)
                 </div>
                 <div class="col-6">
                   <p class="text-end"><span id="amount-text-2"></span> MMK</p>
@@ -267,10 +273,19 @@
 
               <div class="row justify-content-between">
                 <div class="col-6">
-                  Service Charges
+                  Transfer Amount (Baht)
                 </div>
                 <div class="col-6">
-                  <p class="text-end mb-0"><span id="service-amount-text"></span> MMK</p>
+                  <p class="text-end"><span id="amount-text-baht"></span> Baht</p>
+                </div>
+              </div>
+
+              <div class="row justify-content-between">
+                <div class="col-6">
+                  Charges
+                </div>
+                <div class="col-6">
+                  <p class="text-end mb-0"><span id="service-amount-text"></span> Baht</p>
                 </div>
               </div>
             </div>
@@ -374,7 +389,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="assets/app.js?v=2"></script>
+    <script src="assets/app.js?v=3"></script>
 
     <script type="text/javascript">
       $(document).ready(function(){
@@ -382,33 +397,53 @@
           var confirmModal = new bootstrap.Modal(
             document.getElementById('confirmModal')
           );
-          var totalBaht;
           var userData;
 
           $('#transfer-form').submit(function(e){
               e.preventDefault();
+
+              var name = $('#name').val();
+              var mobile = $('#phone').val();
+              var NRC = $('#nrc').val();
+              var address = $('#address').val();
+
+              var note = $('#note').val();
+              var amount = $('#amount').val();
+              var amountBaht = Math.ceil(amount / exchangeRate);
+              var serviceCharges = amountBaht * (serviceRate / 100);
+              var VAT = serviceCharges * (VATRate / 100);
+              var totalCharges = Math.ceil(serviceCharges + VAT);
+              var totalBaht = amountBaht + totalCharges;
               
               userData = {
-                name: $('#name').val(),
-                amount: $('#amount').val(),
-                note: $('#note').val(),
+                id: Date.now(),
+                name: name,
+                mobile: mobile,
+                NRC: NRC,
+                address: address,
+
+                note: note,
+                exchangeRate: exchangeRate,
+                serviceRate: serviceRate,
+                VATRate: VATRate,
+
+                amount: amount,
+                amountBaht: amountBaht,
+                serviceCharges: serviceCharges,
+                VAT: VAT,
+                totalCharges: totalCharges,
+                totalBaht: totalBaht,
+
                 createdAt: new Date().toISOString()
               };
 
-              var serviceCharge = Number(userData.amount) * (serviceRate / 100);
-              var VAT = serviceCharge * (defaultVAT / 100);
-              var totalCharge = serviceCharge + VAT;
-              var totalAmount = Number(userData.amount) + totalCharge;
-              totalBaht = Math.ceil(totalAmount / exchangeRate);
-
-              $('#name-text').text(userData.name);
-              $('#amount-text').text(Number(userData.amount).toLocaleString('en-US'));
               $('#note-text').text(userData.note);
-
-              $('#amount-text-2').text(Number(userData.amount).toLocaleString('en-US'));
-              $('#service-amount-text').text(totalCharge.toLocaleString('en-US'));
-              $('#total-amount-text').text(totalAmount.toLocaleString('en-US'));
-              $('#total-baht-text').text(totalBaht.toLocaleString('en-US'));
+              $('#name-text').text(userData.name);
+              $('#amount-text').text(userData.amount.toLocaleString('en-US'));
+              $('#amount-text-2').text(userData.amount.toLocaleString('en-US'));
+              $('#amount-text-baht').text(userData.amountBaht.toLocaleString('en-US'));
+              $('#service-amount-text').text(userData.totalCharges.toLocaleString('en-US'));
+              $('#total-baht-text').text(userData.totalBaht.toLocaleString('en-US'));
 
               confirmModal.show();
           })
@@ -416,7 +451,7 @@
           $('#btn-confirm').click(function(){
             // deduct from main balance
             var mainBalance = localStorage.getItem('mainBalance');
-            var newBalance = mainBalance - totalBaht;
+            var newBalance = mainBalance - userData.totalBaht;
             localStorage.setItem('mainBalance', newBalance);
 
             // save into history
